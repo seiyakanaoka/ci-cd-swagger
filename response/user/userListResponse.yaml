@@ -1,0 +1,26 @@
+description: ユーザ情報登録成功
+content:
+  application/json:
+    schema:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: 'U0000000000'
+        email:
+          type: string
+          example: 'hoge@example.com'
+        password:
+          type: string
+          example: '*******'
+        name:
+          type: string
+          example: 'hoge'
+        roleType:
+          type: string
+          example: 'ADMIN'
+      required:
+        - statusCode
+        - method
+        - message
+        - data
