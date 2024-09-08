@@ -14,16 +14,14 @@ servers:
           - localhost
 paths:
   /users:
-    post:
+    get:
       tags:
         - users
       summary: ユーザー一覧
       description: |
         ユーザー情報を一覧取得する
-      requestBody:
-        $ref: '../request/user/userListRequest.yaml'
       responses:
         '200':
-          $ref: '../response/user/userListResponse.yaml'
+          $ref: './response/user/userListResponse.yaml'
         '400':
-          $ref: '../response/user/error/400ErrorUserListResponse.yaml'
+          $ref: './response/user/error/400ErrorUserListResponse.yaml'
