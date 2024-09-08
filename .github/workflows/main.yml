@@ -1,0 +1,21 @@
+name: openapi-generate-fe
+on:
+  pull_request_target:
+    types:
+      - closed
+jobs:
+  generate-pull-request:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: 'Update from main'
+          body: 'This pull request updates the feature branch from main.'
+          labels: 'auto-generated'
+          head: feature-branch
+          base: main
+
