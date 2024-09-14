@@ -1,0 +1,18 @@
+name: Create Pull Request
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create Pull Request
+        uses: peter-jurg/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "Merge ${GITHUB_REF#refs/heads/} into main"
+          body: "Automatically created pull request."
+          base: main
+          head: ${GITHUB_REF#refs/heads/}
