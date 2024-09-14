@@ -9,10 +9,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          title: "Merge ${GITHUB_REF#refs/heads/} into main"
-          body: "Automatically created pull request."
+          commit-message: Cloud - Update available list
+          title: Cloud - Update available list
+          body: Cloud - Update available list
           base: main
-          head: ${GITHUB_REF#refs/heads/}
+          labels: automated-pr, Clouds & Regions
+          branch: cloud-update-advanced-params
+          delete-branch: true
