@@ -27,8 +27,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          gh pr create \
-            -B main \
-            -t "${{ github.event.head_commit.message }}" \
-            -a "${{ github.actor }}"  \
-            -F ./.github/workflows/PR_template.md
+          current_branch=$(git rev-parse --abbrev-ref HEAD)
+          if [ "$current_branch" != "main" ]; then
+            gh pr create \
+              -B main \
+              -t "${{ github.event.head_commit.message }}" \
+              -a "${{ github.actor }}"  \
+              -F ./.github/workflows/PR_template.md
+          fi
