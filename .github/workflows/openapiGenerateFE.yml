@@ -1,9 +1,6 @@
 name: openapi-generate-fe
 on:
   workflow_dispatch: # 手動トリガー
-  pull_request:
-    branches: [ main ]
-    types: [ merged ] # マージされたときに実行
 jobs:
   generate-typescript:
     runs-on: ubuntu-latest
