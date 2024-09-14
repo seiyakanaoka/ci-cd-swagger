@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Create a new branch
+        run: |
+          BRANCH_NAME="openapi-generator_$(date +%Y%m%d_%H%M%S)"
+          git checkout -b $BRANCH_NAME
       - name: Install openapi-generator-cli
         run: npm install -g @openapitools/openapi-generator-cli
       - name: Generate TypeScript
@@ -20,7 +24,7 @@ jobs:
           git config user.email ${{ secrets.MY_USER_EMAIL }}
           git add .
           git commit -m "Generate TypeScript from Swagger"
-          git push origin openapi-generator-${{ github.run_id }}
+          git push origin $BRANCH_NAME
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
