@@ -19,7 +19,7 @@ jobs:
           wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.2.0/openapi-generator-cli-6.2.0.jar
           chmod +x openapi-generator-cli-6.2.0.jar
       - name: Generate TypeScript
-        run: ./openapi-generator-cli-6.2.0.jar generate -i ./path/to/your/openapi.yaml -g typescript-axios -o ./generated-typescript
+        run: ./openapi-generator-cli-6.2.0.jar generate -i ./openapi.yaml -g typescript-axios -o ./generated-typescript
       - name: Commit changes
         run: |
           git config user.name ${{ secrets.MY_USER_NAME }}
