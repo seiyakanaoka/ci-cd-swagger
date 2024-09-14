@@ -1,0 +1,38 @@
+name: openapi-generate-fe
+on:
+  workflow_dispatch: # 手動トリガー
+  pull_request_target:
+    types:
+      - closed
+jobs:
+  generate-typescript:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+      - name: Download OpenAPI Generator
+        run: |
+          wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.2.0/openapi-generator-cli-6.2.0.jar
+          chmod +x openapi-generator-cli-6.2.0.jar
+      - name: Generate TypeScript
+        run: ./openapi-generator-cli-6.2.0.jar generate -i ./path/to/your/openapi.yaml -g typescript-axios -o ./generated-typescript
+      - name: Commit changes
+        run: |
+          git config user.name ${{ secrets.MY_USER_NAME }}
+          git config user.email ${{ secrets.MY_USER_EMAIL }}
+          git add generated-typescript
+          git commit -m "Generate TypeScript from Swagger"
+          git push origin main
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: generated-typescript
+          title: "CI/CD + ${{ github.run_id }}"
+          body: "Generated TypeScript from Swagger"
+          labels: "auto-generated"
+
