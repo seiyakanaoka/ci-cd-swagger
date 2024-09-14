@@ -4,10 +4,6 @@ on:
   # pull_request:
   #   branches: [ main ]
   #   types: [ merged ]
-permissions:
-  actions: write
-  checks: write
-  contents: write
 jobs:
   generate-typescript:
     runs-on: ubuntu-latest
@@ -35,7 +31,7 @@ jobs:
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           branch: openapi-generator-${{ github.run_id }}
           title: "CI/CD + ${{ github.run_id }} - Generated TypeScript"
           body: "Generated TypeScript from Swagger"
