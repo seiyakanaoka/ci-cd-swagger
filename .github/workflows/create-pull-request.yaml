@@ -22,7 +22,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+      - name: Set up Git config
+        run: git config push.autoSetupRemote true
       - name: Checkout Branch
         run: |
           BRANCH_NAME="openapi-generator_$(date +%Y%m%d_%H%M%S)"
