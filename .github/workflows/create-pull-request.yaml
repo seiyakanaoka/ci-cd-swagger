@@ -1,12 +1,11 @@
 name: Run the build and tests, and create a pull request
 
 on:
-  push:
-    branches:
-      - '*'
-      - '!main'
-
-
+  # push:
+  #   branches:
+  #     - '*'
+  #     - '!main'
+  workflow_dispatch: # 手動トリガー
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
