@@ -1,20 +1,15 @@
-name: openapi-generate-fe
+name: OpenapiGenerate FrontEnd
 on:
-  workflow_dispatch: # 手動トリガー
-  # pull_request:
-  #   branches: [ main ]
-  #   types: [ merged ]
-permissions:
-  actions: write
-  checks: write
-  contents: write
-  pull-requests: write
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+    types: [ merged ]
 jobs:
   generate-typescript:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Git config
+      - name: Set up Git AutoSetupRemote True
         run: git config push.autoSetupRemote true
       - name: Create a new branch
         run: |
@@ -25,22 +20,29 @@ jobs:
       - name: Generate TypeScript
         run: |
           openapi-generator-cli generate -i ./openapi.yaml -g typescript-axios -o ./generated
-      # - name: Commit changes
-      #   run: |
-      #     git config user.name ${{ secrets.MY_USER_NAME }}
-      #     git config user.email ${{ secrets.MY_USER_EMAIL }}
-      #     git add .
-      #     git commit -m "Generate TypeScript from Swagger"
-      # - name: Git Push
-      #   run: git push --set-upstream origin $BRANCH_NAME
-      - name: Create pull request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          branch: $BRANCH_NAME
-          title: "CI/CD + ${{ github.run_id }} - Generated TypeScript"
-          commit-message: Generate TypeScript from Swagger
-          body: "Generated TypeScript from Swagger"
-          labels: "auto-generated"
-          head: $BRANCH_NAME
-          base: main
+      - name: Commit changes
+        run: |
+          git config user.name ${{ secrets.MY_USER_NAME }}
+          git config user.email ${{ secrets.MY_USER_EMAIL }}
+          git add .
+          git commit -m "Generate TypeScript from Swagger"
+      - name: Git Push
+        run: git push --set-upstream origin $BRANCH_NAME
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        run: |
+          gh pr create --base main --fill-first --assignee "@me"
+
+      # github cliを使用したパターンでプルリク作成は成功しなかった
+      # - name: Create pull request
+      #   uses: peter-evans/create-pull-request@v3
+      #   with:
+      #     token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      #     branch: $BRANCH_NAME
+      #     title: "CI/CD + ${{ github.run_id }} - Generated TypeScript"
+      #     commit-message: Generate TypeScript from Swagger
+      #     body: "Generated TypeScript from Swagger"
+      #     labels: "auto-generated"
+      #     head: $BRANCH_NAME
+      #     base: main
