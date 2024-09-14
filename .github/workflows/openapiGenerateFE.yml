@@ -33,4 +33,5 @@ jobs:
           title: "CI/CD + ${{ github.run_id }} - Generated TypeScript"
           body: "Generated TypeScript from Swagger"
           labels: "auto-generated"
+          head: $BRANCH_NAME
           main-branch: main
