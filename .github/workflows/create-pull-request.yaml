@@ -32,5 +32,7 @@ jobs:
           git commit --allow-empty -m "first commit"
           git push -u origin feat/test
       - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
         run: |
           gh pr create --base main --fill-first --assignee "@me"
