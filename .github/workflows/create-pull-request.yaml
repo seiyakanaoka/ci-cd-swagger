@@ -27,6 +27,8 @@ jobs:
         run: git checkout -b feat/test
       - name: Commit And Push
         run: |
+          git config user.name ${{ secrets.MY_USER_NAME }}
+          git config user.email ${{ secrets.MY_USER_EMAIL }}
           git commit --allow-empty -m "first commit"
           git push -u origin feat/test
       - name: Create Pull Request
