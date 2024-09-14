@@ -24,7 +24,7 @@ jobs:
           git config user.email ${{ secrets.MY_USER_EMAIL }}
           git add .
           git commit -m "Generate TypeScript from Swagger"
-          git push origin $BRANCH_NAME
+          git push -u origin $BRANCH_NAME
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
