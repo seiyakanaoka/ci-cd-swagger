@@ -4,6 +4,10 @@ on:
   # pull_request:
   #   branches: [ main ]
   #   types: [ merged ]
+permissions:
+  actions: write
+  checks: write
+  contents: write
 jobs:
   generate-typescript:
     runs-on: ubuntu-latest
