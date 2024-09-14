@@ -18,7 +18,7 @@ jobs:
         run: |
           git config user.name ${{ secrets.MY_USER_NAME }}
           git config user.email ${{ secrets.MY_USER_EMAIL }}
-          git add generated-typescript
+          git add .
           git commit -m "Generate TypeScript from Swagger"
           git push origin openapi-generator-${{ github.run_id }}
       - name: Create pull request
