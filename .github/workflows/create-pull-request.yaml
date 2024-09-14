@@ -1,19 +1,40 @@
-name: 'PR develop 2 main'
+name: Run the build and tests, and create a pull request
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - '*'
+      - '!main'
+
 
 jobs:
-  develop2main:
+  build_and_test:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: develop
-      - name: create pull request for develop 2 main
-        id: create-pull-request
+      - name: Build
+        run: echo "Build"
+
+      - name: Test
+        run: echo "Test"
+
+  create_pull_request:
+    needs: [build_and_test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check and Create Pull Request
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
-          PULL_REQUEST_URI=$(gh pr create --base main --head develop --title "PRDリリース" --body "必要であれば何か書く" -l "release" --reviewer user-name)
+          PR_COUNT=$(gh pr list --head "${{ github.ref_name }}" --json number --jq '. | length')
+          if [[ $PR_COUNT == 0 ]]; then
+            gh pr create \
+              -B main \
+              -t "${{ github.event.head_commit.message }}" \
+              -a "${{ github.actor }}"  \
+              -F ./.github/workflows/PR_template.md
+          else
+            echo "PR already exists."
+          fi
