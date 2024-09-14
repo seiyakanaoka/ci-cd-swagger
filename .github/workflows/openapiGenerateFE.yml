@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Set up Git config
+        run: git config push.autoSetupRemote true
       - name: Create a new branch
         run: |
           BRANCH_NAME="openapi-generator_$(date +%Y%m%d_%H%M%S)"
@@ -25,7 +27,7 @@ jobs:
           git add .
           git commit -m "Generate TypeScript from Swagger"
       - name: Git Push
-        run: git push
+        run: git push --set-upstream origin $BRANCH_NAME
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
