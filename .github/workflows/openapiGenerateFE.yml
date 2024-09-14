@@ -4,6 +4,10 @@ on:
   # pull_request:
   #   branches: [ main ]
   #   types: [ merged ]
+permissions:
+  actions: write
+  checks: write
+  contents: write
 jobs:
   generate-typescript:
     runs-on: ubuntu-latest
@@ -28,8 +32,6 @@ jobs:
           git commit -m "Generate TypeScript from Swagger"
       - name: Git Push
         run: git push --set-upstream origin $BRANCH_NAME
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
