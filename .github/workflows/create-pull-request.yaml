@@ -23,15 +23,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check and Create Pull Request
-        env:
-          GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - name: Checkout Branch
+        run: git checkout -b feat/test
+      - name: Commit And Push
         run: |
-          current_branch=$(git rev-parse --abbrev-ref HEAD)
-          if [ "$current_branch" != "main" ]; then
-            gh pr create \
-              -B main \
-              -t "${{ github.event.head_commit.message }}" \
-              -a "${{ github.actor }}"  \
-              -F ./.github/workflows/PR_template.md
-          fi
+          git commit --allow-empty -m "first commit"
+          git push -u origin feat/test
+      - name: Create Pull Request
+        run: |
+          gh pr create --base main --fill-first --assignee "@me"
