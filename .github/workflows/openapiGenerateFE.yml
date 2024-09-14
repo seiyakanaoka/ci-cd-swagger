@@ -26,13 +26,13 @@ jobs:
           git config user.email ${{ secrets.MY_USER_EMAIL }}
           git add generated-typescript
           git commit -m "Generate TypeScript from Swagger"
-          git push origin main
+          git push origin openapi-generator-${{ github.run_id }}
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: generated-typescript
-          title: "CI/CD + ${{ github.run_id }}"
+          branch: openapi-generator-${{ github.run_id }}
+          title: "CI/CD + ${{ github.run_id }} - Generated TypeScript"
           body: "Generated TypeScript from Swagger"
           labels: "auto-generated"
-
+          main-branch: main
