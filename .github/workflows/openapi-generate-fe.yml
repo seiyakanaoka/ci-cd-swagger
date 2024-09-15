@@ -4,6 +4,8 @@ on:
   pull_request:
     branches: [ main ]
     types: [ merged ]
+  push:
+    branches: [ main ]
 jobs:
   generate-typescript:
     runs-on: ubuntu-latest
