@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  version: 0.0.0
+  title: RESTful API
+  description: >-
+    バックエンドAPI
+servers:
+  - url: 'http://{host}:8080/api/v1'
+    description: go service api server endpoint application
+    variables:
+      host:
+        default: localhost
+        enum:
+          - localhost
+paths:
+  /users:
+    post:
+      tags:
+        - users
+      summary: ユーザー一覧
+      description: |
+        ユーザー情報を一覧取得する
+      requestBody:
+        $ref: '../request/user/userListRequest.yaml'
+      responses:
+        '200':
+          $ref: '../response/user/userListResponse.yaml'
+        '400':
+          $ref: '../response/user/error/UserListBadRequestResponse.yaml'
