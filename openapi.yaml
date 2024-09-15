@@ -24,4 +24,8 @@ paths:
         '200':
           $ref: './response/user/userListResponse.yaml'
         '400':
+<<<<<<< Updated upstream:openapi.yaml
           $ref: './response/user/error/400ErrorUserListResponse.yaml'
+=======
+          $ref: '../response/user/error/UserListBadRequestResponse.yaml'
+>>>>>>> Stashed changes:docs/openapi.yaml
