@@ -1,0 +1,20 @@
+name: FE Push
+on:
+  workflow_dispatch:
+jobs:
+  fe-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create a new file
+        run: echo "This is a test" > test.txt
+      - name: Create Pull Request
+        uses: peter-jurg/create-pull-request@v3
+        with:
+          token: ${{ secrets.ERSONAL_ACCESS_TOKEN }}
+          base: main  # リポジトリBのベースブランチ
+          head: feature_$(date +%Y%m%d_%H%M%S)
+          title: Add test.txt
+          body: This pull request adds a new file, test.txt
+          commit-message: Add test.txt
+          repository: seiyakanaoka/deploy-lesson-fe
