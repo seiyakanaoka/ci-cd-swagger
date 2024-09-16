@@ -17,4 +17,4 @@ jobs:
           title: Add test.txt
           body: This pull request adds a new file, test.txt
           commit-message: Add test.txt
-          repository: seiyakanaoka/https://github.com/seiyakanaoka/deploy-lesson-fe.git
+          repository: seiyakanaoka/deploy-lesson-fe
