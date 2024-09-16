@@ -21,7 +21,7 @@ jobs:
         run: npm install -g @openapitools/openapi-generator-cli
       - name: Generate TypeScript
         run: |
-          openapi-generator-cli generate -i ./openapi.yaml -g typescript-axios -o ./generated
+          openapi-generator-cli generate -g typescript-axios -i ./ci-cd-swagger/openapi.yaml -o ./models --api-package api --model-package model --generate-alias-as-model --additional-properties withInterfaces=true --additional-properties withSeparateModelsAndApi=true
       - name: Commit changes
         run: |
           git config user.name ${{ secrets.MY_USER_NAME }}
@@ -35,16 +35,3 @@ jobs:
           GH_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           gh pr create --base main --fill-first --assignee "@me"
-
-      # github cliを使用したパターンでプルリク作成は成功しなかった
-      # - name: Create pull request
-      #   uses: peter-evans/create-pull-request@v3
-      #   with:
-      #     token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-      #     branch: $BRANCH_NAME
-      #     title: "CI/CD + ${{ github.run_id }} - Generated TypeScript"
-      #     commit-message: Generate TypeScript from Swagger
-      #     body: "Generated TypeScript from Swagger"
-      #     labels: "auto-generated"
-      #     head: $BRANCH_NAME
-      #     base: main
