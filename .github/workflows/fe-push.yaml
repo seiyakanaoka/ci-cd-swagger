@@ -11,7 +11,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-jurg/create-pull-request@v3
         with:
-          token: ${{ secrets.ERSONAL_ACCESS_TOKEN }}
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           base: main  # リポジトリBのベースブランチ
           head: feature_$(date +%Y%m%d_%H%M%S)
           title: Add test.txt
